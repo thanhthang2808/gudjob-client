@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import { RatingModal } from "@/components/ui/rating-modal";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -10,6 +11,7 @@ const TaskDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [submissionContent, setSubmissionContent] = useState("");
   const [files, setFiles] = useState([{ fileName: "", fileUrl: "" }]);
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ const TaskDetails = () => {
       alert("Invalid task data. Cannot deny task.");
       return;
     }
-  
+
     try {
       await axios.post(
         `${API_URL}/api/task/deny-task`,
@@ -59,26 +61,36 @@ const TaskDetails = () => {
         { withCredentials: true }
       );
       alert("Task denied successfully!");
-  
+
       try {
         await axios.put(
           `${API_URL}/api/wallet/unlock-wallet-balance`,
-          { amount: task.payment.amount, userId: task.employerId, customId: task.customId },
+          {
+            amount: task.payment.amount,
+            userId: task.employerId,
+            customId: task.customId,
+          },
           { withCredentials: true }
         );
-        console.log("Refunded", task.payment.amount, "to employer", task.employerId);
+        console.log(
+          "Refunded",
+          task.payment.amount,
+          "to employer",
+          task.employerId
+        );
       } catch (refundError) {
         console.error("Failed to refund payment:", refundError.message);
-        alert("Task rejected but failed to refund payment. Please contact support.");
+        alert(
+          "Task rejected but failed to refund payment. Please contact support."
+        );
       }
-  
+
       window.location.reload();
     } catch (rejectError) {
       console.error("Error denying task:", rejectError.message);
       alert("Error denying task: " + rejectError.message);
     }
   };
-  
 
   const handleFileChange = (index, field, value) => {
     const updatedFiles = [...files];
@@ -193,6 +205,14 @@ const TaskDetails = () => {
             Submit
           </button>
         )}
+        {task.status === "Approved" && (
+          <button
+            className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+            onClick={() => setIsReviewModalOpen(true)}
+          >
+            Review recruiter
+          </button>
+        )}
         {task.status === "Submitted" && (
           <div
             className="text-gray-400 px-2 rounded"
@@ -260,6 +280,12 @@ const TaskDetails = () => {
             </div>
           </div>
         </div>
+      )}
+      {isReviewModalOpen && (
+        <RatingModal
+          revieweeId={task.employerId}
+          onClose={() => setIsReviewModalOpen(false)}
+        />
       )}
     </div>
   );

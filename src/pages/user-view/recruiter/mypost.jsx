@@ -303,11 +303,14 @@ const MyPosts = () => {
                     >
                       Xóa
                     </button>
-                    {job.workType === "Tự do" && (
+                    {job.workType === "Tự do" ? (
               <div className=" bottom-1 right-1 text-md px-1 py-1 rounded-lg mt-10 ml-10">
-                <text className="text-green-400 font-bold">Việc làm Freelance</text>
+                <div className="text-green-400 font-bold">Việc làm Freelance</div>
               </div>
-            )}
+            ) : (<div className=" bottom-1 right-1 text-md px-1 py-1 rounded-lg mt-10 ml-10">
+              <div className="text-white font-bold">Việc làm Freelance</div>
+            </div>)}
+
                   </div>
                 </div>
                 
