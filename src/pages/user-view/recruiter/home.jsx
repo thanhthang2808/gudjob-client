@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Outlet } from "react-router-dom";
 import CandidateList from "./candidate-list";
 import { handleChat } from "@/services/chat-service";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import welcomeBg from "@/assets/bg.jpg";
+import BannerSlider from "@/components/user-view/candidate/banner-slider";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -103,14 +106,24 @@ function RecruiterHome() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-center mb-6">
-        Trang chủ nhà tuyển dụng
-      </h1>
+    <div className="flex flex-col min-h-screen w-full">
+      {/* Header */}
+      <div
+        className="flex flex-col bg-blue-200 w-full p-4 bg-cover items-center bg-center"
+        style={{ backgroundImage: `url(${welcomeBg})` }}
+      >
+        <h1 className="text-2xl text-blue-400 font-bold max-w-[80%]">
+          Gudjob - Giải pháp tuyển dụng hiệu quả, kết nối nhân tài nhanh chóng.
+        </h1>
+        <h1 className="text-sm my-2 text-white max-w-[80%]">
+          Nền tảng uy tín giúp bạn tìm kiếm, sàng lọc và kết nối với những ứng
+          viên xuất sắc. Hơn 40,000 ứng viên tiềm năng mỗi ngày sẵn sàng gia
+          nhập đội ngũ của bạn.
+        </h1>
+        <BannerSlider />
+      </div>
 
-      {/* Search and Filters */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Search Bar */}
+      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-10">
         <input
           type="text"
           placeholder="Tìm kiếm ứng viên theo tên hoặc email..."
@@ -119,7 +132,6 @@ function RecruiterHome() {
           onChange={handleSearchChange}
         />
 
-        {/* Filter by Skills */}
         <input
           type="text"
           name="skills"
@@ -129,7 +141,6 @@ function RecruiterHome() {
           onChange={handleFilterChange}
         />
 
-        {/* Filter by Experience */}
         <select
           name="experience"
           className="p-2 border rounded-lg w-full"
@@ -143,7 +154,6 @@ function RecruiterHome() {
         </select>
       </div>
 
-      {/* Candidate List */}
       <CandidateList
         candidates={filteredCandidates || []}
         onViewDetails={(candidate) => handleViewDetails(candidate)}
@@ -156,6 +166,9 @@ function RecruiterHome() {
           onClose={() => setIsModalOpen(false)}
         />
       )}
+      {/* <main className="flex-1 bg-gray-100 p-4">
+            <Outlet />
+        </main>    */}
     </div>
   );
 }
@@ -166,15 +179,20 @@ function CandidateDetailsModal({ candidate, onClose }) {
   if (!candidate) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={onClose}>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+      onClick={onClose}
+    >
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-        <div className="text-center text-xl font-bold">Thông tin ứng viên
-        <X className="absolute top-4 right-4 cursor-pointer text-white" onClick={onClose} />
-
+        <div className="text-center text-xl font-bold">
+          Thông tin ứng viên
+          <X
+            className="absolute top-4 right-4 cursor-pointer text-white"
+            onClick={onClose}
+          />
         </div>
-        
+
         <div className="space-y-4">
-        
           <img
             src={candidate.avatar?.url || "https://via.placeholder.com/150"}
             alt={`${candidate.name}'s avatar`}

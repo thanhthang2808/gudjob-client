@@ -44,6 +44,8 @@ import AssignTask from "./pages/user-view/recruiter/assign-task";
 import TaskManager from "./pages/user-view/recruiter/task-mamager";
 import TermsAndConditions from "./pages/user-view/terms-and-conditions";
 import VerifyEmail from "./pages/auth/verify-email";
+import MyTasks from "./pages/user-view/candidate/my-tasks";
+import TaskDetails from "./pages/user-view/candidate/task-detail";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -116,6 +118,8 @@ function App() {
             <Route path="mywallet" element={<MyWallet />} />
             <Route path="search-results" element={<SearchResults />} />
             <Route path="update-cv" element={<UpdateCV />} />
+            <Route path="mytasks" element={<MyTasks />} />
+            <Route path="task/:id" element={<TaskDetails />} />
           </Route>
           <Route
             path="/recruiter"

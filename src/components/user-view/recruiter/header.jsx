@@ -11,6 +11,8 @@ import {
     Bell,
     MessageCircle,
     Tag,
+    ClipboardList,
+    KeyRound,
   } from "lucide-react"; // Added icons for dropdown items
   import { useDispatch, useSelector } from "react-redux";
   import { logoutUser } from "@/store/auth-slice";
@@ -111,7 +113,7 @@ import {
                 })
               }
             >
-              Việc làm
+              Ứng viên
             </div>
             {jobsDropdownOpen && (
               <div className="absolute bg-white text-gray-800 rounded-lg shadow-lg z-50  w-72">
@@ -128,25 +130,13 @@ import {
                       })
                     }
                   >
-                    <Search size={16} /> Tìm việc
-                  </li>
-                  <li
-                    className="p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2 rounded-lg"
-                    onClick={() => navigate("/candidate/myapplications")}
-                  >
-                    <FileText size={16} /> Việc làm đã ứng tuyển
+                    <Search size={16} /> Tìm ứng viên
                   </li>
                   <li
                     className="p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2 rounded-lg"
                     onClick={() => navigate("/candidate/savedjobs")}
                   >
-                    <Bookmark size={16} /> Việc làm đã lưu
-                  </li>
-                  <li
-                    className="p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2 rounded-lg"
-                    onClick={() => navigate("/candidate/companies")}
-                  >
-                    <Home size={16} /> Danh sách công ty
+                    <Bookmark size={16} /> Ứng viên đã lưu
                   </li>
                 </ul>
               </div>
@@ -223,18 +213,6 @@ import {
               <ul className="text-sm">
                 <li
                   className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
-                  onClick={() => navigate("/recruiter/profile")}
-                >
-                  <Settings size={16} /> Cài đặt thông tin cá nhân
-                </li>
-                <li
-                  className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
-                  onClick={() => navigate("/recruiter/task-manager")}
-                >
-                  <Tag size={16} /> Task manager
-                </li>
-                <li
-                  className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
                   onClick={() => navigate("/candidate/mywallet")}
                 >
                   <Wallet size={16} /> Ví của tôi{" "}
@@ -242,6 +220,24 @@ import {
                     {formatAmount(walletBalance)}
                   </span>
                 </li>
+                <li
+                  className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                  onClick={() => navigate("/recruiter/task-manager")}
+                >
+                  <ClipboardList size={16} /> Quản lý nhiệm vụ
+                </li>
+                <li
+                  className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                  onClick={() => navigate("/recruiter/profile")}
+                >
+                  <Settings size={16} /> Cài đặt thông tin cá nhân
+                </li>
+                <li
+                className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                onClick={() => navigate("/candidate/profile")}
+              >
+                <KeyRound size={16} /> Cài đặt bảo mật
+              </li>
                 <li
                   className="p-2 hover:bg-red-100 text-red-600 flex items-center gap-2 cursor-pointer"
                   onClick={handleLogout}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { useToast } from "@/hooks/use-toast"; // Import useToast hook
-import handleAssignTask from "@/services/task-services";
+import { handleAssignTask } from "@/services/task-services";
 import handleLockBalance from "@/services/wallet-services";
 
 const AssignTask = () => {

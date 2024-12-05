@@ -10,6 +10,8 @@ import {
   Home,
   Bell,
   MessageCircle,
+  ListChecks,
+  KeyRound,
 } from "lucide-react"; // Added icons for dropdown items
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/auth-slice";
@@ -220,6 +222,21 @@ function CandidateHeader() {
               </div>
             </div>
             <ul className="text-sm">
+            <li
+                className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                onClick={() => navigate("/candidate/mywallet")}
+              >
+                <Wallet size={16} /> Ví của tôi{" "}
+                <span className="text-green-600">
+                  {formatAmount(walletBalance)}
+                </span>
+              </li>
+              <li
+                className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                onClick={() => navigate("/candidate/mytasks")}
+              >
+                <ListChecks size={16} /> Nhiệm vụ freelance
+              </li>
               <li
                 className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
                 onClick={() => navigate("/candidate/profile")}
@@ -228,12 +245,9 @@ function CandidateHeader() {
               </li>
               <li
                 className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
-                onClick={() => navigate("/candidate/mywallet")}
+                onClick={() => navigate("/candidate/profile")}
               >
-                <Wallet size={16} /> Ví của tôi{" "}
-                <span className="text-green-600">
-                  {formatAmount(walletBalance)}
-                </span>
+                <KeyRound size={16} /> Cài đặt bảo mật
               </li>
               <li
                 className="p-2 hover:bg-red-100 text-red-600 flex items-center gap-2 cursor-pointer"
