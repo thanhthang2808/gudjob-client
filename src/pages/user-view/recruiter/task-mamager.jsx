@@ -97,7 +97,7 @@ const TaskManager = () => {
       try {
         await axios.put(
           `${API_URL}/api/wallet/unlock-wallet-balance`,
-          { amount: task.payment.amount, userId: task.employerId },
+          { amount: task.payment.amount, userId: task.employerId, customId: task.customId },
           { withCredentials: true }
         );
         console.log(
