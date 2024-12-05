@@ -213,7 +213,7 @@ import {
               <ul className="text-sm">
                 <li
                   className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
-                  onClick={() => navigate("/candidate/mywallet")}
+                  onClick={() => navigate("/recruiter/mywallet")}
                 >
                   <Wallet size={16} /> Ví của tôi{" "}
                   <span className="text-green-600">
@@ -240,7 +240,7 @@ import {
               </li>
                 <li
                   className="p-2 hover:bg-red-100 text-red-600 flex items-center gap-2 cursor-pointer"
-                  onClick={handleLogout}
+                  
                 >
                   <LogOut size={16} /> Đăng xuất
                 </li>

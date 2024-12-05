@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import avatarDefault from "@/assets/default-user.png";
+import { ShieldCheck } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -12,6 +13,7 @@ const RecruiterProfile = () => {
     const [preview, setPreview] = useState(null);
     const [message, setMessage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [candidates, setCandidates] = useState([]);
 
     const getInfo = async () => {
@@ -99,6 +101,23 @@ const RecruiterProfile = () => {
         getInfo();
     }, []);
 
+    const sendVerificationEmail = async () => {
+        setLoading(true);
+        setMessage('');
+        try {
+          const response = await axios.post(`${API_URL}/api/auth/send-verification-email`, {
+            email: user.email,
+          });
+          setMessage(response.data.message); // Hiển thị thông báo từ backend
+        } catch (error) {
+          setMessage(
+            error.response?.data?.message || 'Error sending verification email.'
+          );
+        } finally {
+          setLoading(false);
+        }
+      };
+
     return (
         <div className="flex flex-col md:flex-row p-5 md:p-10 bg-gray-100 min-h-screen">
             {/* Left side for recruiter information */}
@@ -142,6 +161,25 @@ const RecruiterProfile = () => {
                         <h2 className="text-xl font-semibold text-gray-800">{user?.name}</h2>
                         <h3 className="text-md font-medium text-gray-600">{user?.companyName}</h3>
                     </div>
+                    {user?.isVerified === false ? (            
+            <div className="relative group">               
+                <ShieldCheck className="w-6 h-6 text-red-500 ml-2 cursor-pointer" onClick={sendVerificationEmail}/>
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 hidden group-hover:flex items-center justify-center bg-gray-800 text-white text-sm rounded-md py-2 px-3 shadow-lg z-50">
+                    Gửi email xác thực
+                </div>
+            </div>
+          ) : (
+            <div className="relative group">
+                {/* Icon */}
+               
+                <ShieldCheck className="w-6 h-6 text-green-500 ml-2" />
+
+                {/* Tooltip */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 hidden group-hover:flex items-center justify-center bg-gray-800 text-white text-sm rounded-md py-2 px-3 shadow-lg z-50">
+                    Tài khoản đã được xác thực
+                </div>
+            </div>
+          )}
                 </div>                
             </div>
 

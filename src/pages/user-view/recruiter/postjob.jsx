@@ -23,7 +23,7 @@ const PostJob = () => {
   const [salaryFrom, setSalaryFrom] = useState("");
   const [salaryTo, setSalaryTo] = useState("");
   const [fixedSalary, setFixedSalary] = useState("");
-  const [salaryType, setSalaryType] = useState("default");
+  const [salaryType, setSalaryType] = useState("Fixed Salary");
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
@@ -390,7 +390,6 @@ const PostJob = () => {
               className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
-              <option value="default">Select Salary Type</option>
               <option value="Fixed Salary">Fixed Salary</option>
               <option value="Ranged Salary">Ranged Salary</option>
             </select>
