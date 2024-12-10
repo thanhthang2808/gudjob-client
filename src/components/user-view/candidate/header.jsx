@@ -139,7 +139,7 @@ function CandidateHeader() {
                 </li>
                 <li
                   className="p-2 hover:bg-gray-200 cursor-pointer flex items-center gap-2 rounded-lg"
-                  onClick={() => navigate("/candidate/savedjobs")}
+                  onClick={() => navigate("/candidate/saved-jobs")}
                 >
                   <Bookmark size={16} /> Việc làm đã lưu
                 </li>
@@ -158,7 +158,7 @@ function CandidateHeader() {
         </div> */}
 
         <div
-          onClick={() => navigate("/candidate/update-cv")}
+          onClick={() => navigate("/candidate/my-cv")}
           className="font-bold hover:text-green-500 text-sm px-3 h-full py-4 hover:bg-gray-800 rounded flex items-center cursor-pointer"
         >
           Hồ sơ của tôi
@@ -177,12 +177,12 @@ function CandidateHeader() {
       {/* User Avatar on Right */}
       <div className="relative flex items-center md:space-x-4 p-2">
         {/* Notification Button */}
-        <div className="relative cursor-pointer">
+        {/* <div className="relative cursor-pointer">
           <Bell size={24} className="text-gray-500 hover:text-gray-800" />
           <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-            3 {/* Example notification count */}
+            3 
           </span>
-        </div>
+        </div> */}
 
         {/* Messaging Button */}
         <div className="relative cursor-pointer" onClick={() => navigate("/conversation/")}>
@@ -190,7 +190,7 @@ function CandidateHeader() {
             size={24}
             className="text-gray-500 hover:text-gray-800"
           />
-          <span className="absolute top-0 right-0 h-4 w-4 bg-blue-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+          <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
             5 {/* Example message count */}
           </span>
         </div>

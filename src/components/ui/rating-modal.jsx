@@ -8,12 +8,10 @@ const RatingModal = ({ onClose, revieweeId }) => {
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  // Xử lý click vào ngôi sao
   const handleStarClick = (value) => {
     setRating(value);
   };
 
-  // Xử lý hover qua ngôi sao
   const handleStarHover = (value) => {
     setHoverRating(value);
   };
@@ -22,7 +20,6 @@ const RatingModal = ({ onClose, revieweeId }) => {
     setHoverRating(0);
   };
 
-  // Xử lý submit đánh giá
   const handleSubmit = async () => {
     if (!rating || !comment.trim()) {
       alert("Vui lòng chọn số sao và nhập nhận xét.");

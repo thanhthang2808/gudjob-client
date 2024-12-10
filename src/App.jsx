@@ -47,6 +47,10 @@ import VerifyEmail from "./pages/auth/verify-email";
 import MyTasks from "./pages/user-view/candidate/my-tasks";
 import TaskDetails from "./pages/user-view/candidate/task-detail";
 import MyWalletRecruiter from "./pages/user-view/recruiter/mywallet";
+import MyCV from "./pages/user-view/candidate/my-cv";
+import SavedJobs from "./pages/user-view/candidate/saved-jobs";
+import CompaniesPage from "./pages/user-view/candidate/companies";
+import CompanyInfo from "./pages/user-view/candidate/company-info";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -114,11 +118,15 @@ function App() {
             <Route path="job/:id" element={<JobDetails />} />
             <Route path="application/:id" element={<Application />} />
             <Route path="myapplications" element={<MyApplications />} />
+            <Route path="saved-jobs" element={<SavedJobs />} />
+            <Route path="companies" element={<CompaniesPage />} />
             <Route path="news" element={<CandidateNews />} />
             <Route path="forum" element={<CandidateForum />} />
             <Route path="mywallet" element={<MyWallet />} />
             <Route path="search-results" element={<SearchResults />} />
             <Route path="update-cv" element={<UpdateCV />} />
+            <Route path="my-cv" element={<MyCV />} />
+            <Route path="company/:recruiterId" element={<CompanyInfo />} />
             <Route path="mytasks" element={<MyTasks />} />
             <Route path="task/:id" element={<TaskDetails />} />
           </Route>

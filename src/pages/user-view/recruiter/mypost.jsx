@@ -175,20 +175,26 @@ const MyPosts = () => {
                         <div className="font-semibold text-lg">
                           {application.name}
                         </div>
-                        <div className="text-sm">
+                        {/* <div className="text-sm">
                           Email: {application.email}
                         </div>
                         <div className="text-sm">
                           Phone: {application.phone}
+                        </div> */}
+                        <div className="text-sm">
+                          Địa chỉ: {application.address}
                         </div>
                         <div className="text-sm">
-                          Address: {application.address}
+                          Cover letter: 
+                        </div>
+                        <div className="text-sm bg-gray-200 p-2 rounded-md">
+                         {application.coverLetter}
                         </div>
                         <div className="text-sm">
-                          Status: {application.status}
+                          Trạng thái: {application.status}
                         </div>
                         <a
-                          href={application.resume.url}
+                          href={`https://docs.google.com/gview?url=${application.resume.url}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 hover:underline"

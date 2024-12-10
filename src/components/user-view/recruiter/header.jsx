@@ -168,12 +168,12 @@ function RecruiterHeader() {
       {/* User Avatar on Right */}
       <div className="relative flex items-center md:space-x-4 p-2">
         {/* Notification Button */}
-        <div className="relative cursor-pointer">
+        {/* <div className="relative cursor-pointer">
           <Bell size={24} className="text-gray-500 hover:text-gray-800" />
           <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-            3 {/* Example notification count */}
+            3 
           </span>
-        </div>
+        </div> */}
 
         {/* Messaging Button */}
         <div
@@ -184,7 +184,7 @@ function RecruiterHeader() {
             size={24}
             className="text-gray-500 hover:text-gray-800"
           />
-          <span className="absolute top-0 right-0 h-4 w-4 bg-blue-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+          <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
             5 {/* Example message count */}
           </span>
         </div>
