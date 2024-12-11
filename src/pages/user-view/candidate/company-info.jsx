@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Briefcase, MapPin, Globe, Building2 } from "lucide-react";
 import { Rating } from "@mui/material";
 import ReviewsModal from "@/components/ui/reviews-modal";
+import { handleChat } from "@/services/chat-service";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -134,7 +135,11 @@ const CompanyInfo = () => {
                   onClick={() => setOpenModal(true)} // Open the modal on click
                 >
                   Xem đánh giá
-                </span>
+                </span>      
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-3"
+                  onClick={() => handleChat(recruiterId, navigate)}
+                >Nhắn tin</button>          
               </div>
             </div>
           </div>
@@ -151,7 +156,8 @@ const CompanyInfo = () => {
               {jobs.map((job) => (
                 <div
                   key={job._id}
-                  className="border p-4 rounded-lg shadow-md hover:shadow-lg transition"
+                  className="border p-4 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer"
+                  onClick={() => navigate(`/candidate/job/${job._id}`)}
                 >
                   <h3 className="text-lg font-medium text-gray-800">{job.title}</h3>
                   <p className="text-gray-600 text-sm mt-2">{job.description}</p>
@@ -160,12 +166,6 @@ const CompanyInfo = () => {
                       <Briefcase className="inline w-5 h-5 mr-1" />
                       {job.salary || "Salary not specified"}
                     </span>
-                    <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                      onClick={() => navigate(`/candidate/job/${job._id}`)}
-                    >
-                      View Details
-                    </button>
                   </div>
                 </div>
               ))}

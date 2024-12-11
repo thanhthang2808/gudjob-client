@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import anhmau from "@/assets/anhmau.png";
-import heart from "@/assets/heart.svg";
+import anhmau from "@/assets/placeholder-logo.png";
 import { Check, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import CandidateSearch from "./search";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";

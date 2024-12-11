@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import anhmau from "@/assets/anhmau.png";
-import heart from "@/assets/heart.svg";
+import anhmau from "@/assets/placeholder-logo.png";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";

@@ -21,6 +21,7 @@ import { useState, useEffect } from "react";
 import logo from "@/assets/logo-gudjob.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getTotalUnreadMessages } from "@/services/chat-service";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -33,6 +34,7 @@ function RecruiterHeader() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [jobsDropdownOpen, setJobsDropdownOpen] = useState(false);
+  const [totalUnread, setTotalUnread] = useState(0);
 
   useEffect(() => {
     const getInfo = async () => {
@@ -63,6 +65,19 @@ function RecruiterHeader() {
       }
     };
     getWallet();
+  }, []);
+
+  useEffect(() => {
+    const fetchTotalUnreadMessages = async () => {
+      try {
+        const unreadCount = await getTotalUnreadMessages();
+        setTotalUnread(unreadCount); // Store the result in the state
+      } catch (error) {
+        console.error("Lỗi khi lấy số tin nhắn chưa đọc:", error);
+      }
+    };
+
+    fetchTotalUnreadMessages(); // Call the service when the component mounts
   }, []);
 
   const handleLogout = () => {
@@ -184,9 +199,11 @@ function RecruiterHeader() {
             size={24}
             className="text-gray-500 hover:text-gray-800"
           />
-          <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
-            5 {/* Example message count */}
+          {totalUnread > 0 && (
+            <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 text-white text-xs font-bold flex items-center justify-center rounded-full">
+            {totalUnread}
           </span>
+          )}
         </div>
 
         {/* User Avatar */}
@@ -239,7 +256,8 @@ function RecruiterHeader() {
                 >
                   <Settings size={16} /> Cài đặt thông tin cá nhân
                 </li>
-                <li className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer">
+                <li className="p-2 hover:bg-gray-200 flex items-center gap-2 cursor-pointer"
+                onClick={() => navigate("/recruiter/security-settings")}>
                   <KeyRound size={16} /> Cài đặt bảo mật
                 </li>
                 <li

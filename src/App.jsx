@@ -51,6 +51,10 @@ import MyCV from "./pages/user-view/candidate/my-cv";
 import SavedJobs from "./pages/user-view/candidate/saved-jobs";
 import CompaniesPage from "./pages/user-view/candidate/companies";
 import CompanyInfo from "./pages/user-view/candidate/company-info";
+import CandidateSecuritySettings from "./pages/user-view/candidate/security-settings";
+import ForgotPassword from "./pages/user-view/forgot-password";
+import ResetPassword from "./pages/user-view/reset-password";
+import RecruiterSecuritySettings from "./pages/user-view/recruiter/security-settings";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -115,6 +119,7 @@ function App() {
             <Route path="home" element={<CandidateHome />} />
             <Route path="account" element={<CandidateAccount />} />
             <Route path="profile" element={<CandidateProfile />} />
+            <Route path="security-settings" element={<CandidateSecuritySettings />} />
             <Route path="job/:id" element={<JobDetails />} />
             <Route path="application/:id" element={<Application />} />
             <Route path="myapplications" element={<MyApplications />} />
@@ -142,6 +147,7 @@ function App() {
             <Route path="myposts" element={<MyPosts />} />
             <Route path="profile" element={<RecruiterProfile />} />
             <Route path="postjob" element={<PostJob />} />
+            <Route path="security-settings" element={<RecruiterSecuritySettings />} />
             <Route path="forum" element={<HRForum />} />
             <Route path="job/:id" element={<RecruiterJobDetails />} />
             <Route path="assign-task/:id" element={<AssignTask />} />
@@ -164,6 +170,8 @@ function App() {
             <Route path="" element={<ConversationPage />} />
           </Route>
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/unauth-page" element={<UnauthPage />} />
           <Route path="*" element={<NotFound />} />

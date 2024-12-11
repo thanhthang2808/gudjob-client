@@ -18,7 +18,7 @@ const ConfirmModal = ({ title, content, onClose, onConfirm }) => {
 
         {/* Modal Content */}
         <div className="p-4">
-          <p className="text-gray-600">{content || "Are you sure you want to proceed?"}</p>
+          <span className="text-gray-600">{content || "Are you sure you want to proceed?"}</span>
         </div>
 
         {/* Modal Actions */}
