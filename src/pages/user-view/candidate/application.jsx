@@ -15,7 +15,7 @@ const Application = () => {
     address: "",
     coverLetter: "",
   });
-  const [resume, setResume] = useState(null); // CV được chọn
+  const [resume, setResume] = useState(null); 
   const [cvs, setCvs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -24,7 +24,6 @@ const Application = () => {
   const navigate = useNavigate();
   const { id: jobId } = useParams();
 
-  // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
