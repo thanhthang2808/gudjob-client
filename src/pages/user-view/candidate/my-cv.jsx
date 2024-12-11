@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import CV from "@/assets/CV-default.png";
+import CV from "@/assets/cv-default.png";
 import { Trash, UploadCloud } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-modal";
-import CVPlaceholder from "@/assets/CV-default.png";
+import CVPlaceholder from "@/assets/cv-default.png";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
