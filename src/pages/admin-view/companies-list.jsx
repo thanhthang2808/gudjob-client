@@ -5,32 +5,33 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-function UserList() {
-  const [users, setUsers] = useState([]);
+function CompaniesList() {
+  const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 20;
+  const companiesPerPage = 20;
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchCompanies = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/user/get-list-candidates`, {
+        const response = await axios.get(`${API_URL}/api/user/get-list-companies`, {
           withCredentials: true,
         });
-        setUsers(response.data.users);
+        setCompanies(response.data.users);
+        console.log("Companies:", response.data.users);
       } catch (err) {
-        setError("Không thể lấy danh sách người dùng.");
-        console.error("Error fetching users:", err);
+        setError("Không thể lấy danh sách công ty.");
+        console.error("Error fetching companies:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    fetchCompanies();
   }, []);
 
   const handleLockAccount = async (id, currentStatus) => {
@@ -41,9 +42,9 @@ function UserList() {
         { status: newStatus },
         { withCredentials: true }
       );
-      setUsers(
-        users.map((user) =>
-          user._id === id ? { ...user, status: newStatus } : user
+      setCompanies(
+        companies.map((company) =>
+          company._id === id ? { ...company, status: newStatus } : company
         )
       );
     } catch (err) {
@@ -51,12 +52,12 @@ function UserList() {
     }
   };
 
-  const handleDeleteAccount = async (userId) => {
+  const handleDeleteAccount = async (companyId) => {
     try {
-      await axios.delete(`${API_URL}/api/user/delete-user/${userId}`, {
+      await axios.delete(`${API_URL}/api/company/delete-company/${companyId}`, {
         withCredentials: true,
       });
-      setUsers(users.filter((user) => user._id !== userId));
+      setCompanies(companies.filter((company) => company._id !== companyId));
     } catch (err) {
       console.error("Error deleting account:", err);
     }
@@ -66,21 +67,21 @@ function UserList() {
     navigate(`/admin/user-detail/${id}`);
   };
 
-  const filteredUsers = users
-    .filter((user) =>
-      user.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCompanies = companies
+    .filter((company) =>
+      company.companyName.toLowerCase().includes(search.toLowerCase())
     )
     .sort((a, b) =>
       sortOrder === "asc"
-        ? a.name.localeCompare(b.name)
-        : b.name.localeCompare(a.name)
+        ? a.companyName.localeCompare(b.companyName)
+        : b.companyName.localeCompare(a.companyName)
     );
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+  const indexOfLastCompany = currentPage * companiesPerPage;
+  const indexOfFirstCompany = indexOfLastCompany - companiesPerPage;
+  const currentCompanies = filteredCompanies.slice(indexOfFirstCompany, indexOfLastCompany);
 
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const totalPages = Math.ceil(filteredCompanies.length / companiesPerPage);
 
   if (loading) return <div className="text-center">Đang tải...</div>;
   if (error) return <div className="text-center text-red-500">{error}</div>;
@@ -88,7 +89,7 @@ function UserList() {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
-        Danh sách người dùng
+        Danh sách công ty
       </h1>
 
       <div className="bg-white shadow-lg rounded-lg p-6">
@@ -96,7 +97,7 @@ function UserList() {
           <div className="flex items-center">
             <input
               type="text"
-              placeholder="Tìm kiếm theo tên"
+              placeholder="Tìm kiếm theo tên công ty"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="border rounded p-2 mr-2"
@@ -117,20 +118,28 @@ function UserList() {
         <table className="min-w-full">
           <thead className="bg-gray-200">
             <tr>
-              <th className="px-6 py-4 text-left">Tên người dùng</th>
+              <th className="px-6 py-4 text-left">Tên công ty</th>
               <th className="px-6 py-4 text-left">Email</th>
+              <th className="px-6 py-4 text-left">Logo</th>
               <th className="px-6 py-4 text-left">Trạng thái</th>
               <th className="px-6 py-4 text-left">Hành động</th>
             </tr>
           </thead>
           <tbody>
-            {currentUsers.length > 0 ? (
-              currentUsers.map((user) => (
-                <tr key={user._id} className="border-b">
-                  <td className="px-6 py-4">{user.name}</td>
-                  <td className="px-6 py-4">{user.email}</td>
+            {currentCompanies.length > 0 ? (
+              currentCompanies.map((company) => (
+                <tr key={company._id} className="border-b">
+                  <td className="px-6 py-4">{company.companyName}</td>
+                  <td className="px-6 py-4">{company.email}</td>
                   <td className="px-6 py-4">
-                    {user.status === "locked" ? (
+                    <img
+                      src={company.avatar?.url}
+                      alt="Avatar"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  </td>
+                  <td className="px-6 py-4">
+                    {company.status === "locked" ? (
                       <span className="text-red-500">Bị khóa</span>
                     ) : (
                       <span className="text-green-500">Hoạt động</span>
@@ -138,28 +147,28 @@ function UserList() {
                   </td>
                   <td className="px-6 py-4 space-x-2">
                     <button
-                      onClick={() => handleViewDetails(user._id)}
+                      onClick={() => handleViewDetails(company._id)}
                       className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                     >
                       Xem chi tiết
                     </button>
-                    {user.status === "locked" ? (
+                    {company.status === "locked" ? (
                       <button
-                        onClick={() => handleLockAccount(user._id, user.status)}
+                        onClick={() => handleLockAccount(company._id, company.status)}
                         className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                       >
                         <Unlock className="inline-block mr-2" /> Mở khóa
                       </button>
                     ) : (
                       <button
-                        onClick={() => handleLockAccount(user._id, user.status)}
+                        onClick={() => handleLockAccount(company._id, company.status)}
                         className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
                       >
                         <Lock className="inline-block mr-2" /> Khóa
                       </button>
                     )}
                     <button
-                      onClick={() => handleDeleteAccount(user._id)}
+                      onClick={() => handleDeleteAccount(company._id)}
                       className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                     >
                       <Trash className="inline-block mr-2" /> Xóa
@@ -169,8 +178,8 @@ function UserList() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-4 text-gray-500">
-                  Không có người dùng nào.
+                <td colSpan="5" className="text-center py-4 text-gray-500">
+                  Không có công ty nào.
                 </td>
               </tr>
             )}
@@ -200,4 +209,4 @@ function UserList() {
   );
 }
 
-export default UserList;
+export default CompaniesList;

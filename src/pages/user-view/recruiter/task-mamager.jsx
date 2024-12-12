@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { RatingModal } from "@/components/ui/rating-modal";
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -10,6 +11,7 @@ const TaskManager = () => {
   const [statusFilter, setStatusFilter] = useState(""); // Bộ lọc trạng thái
   const [selectedTask, setSelectedTask] = useState(null); // Task đang chọn để hiển thị chi tiết
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   // Fetch danh sách task từ API
   useEffect(() => {
@@ -205,6 +207,7 @@ export default TaskManager;
 
 const TaskDetailsModal = ({ task, onClose, onApprove, onReject }) => {
   if (!task) return null;
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -302,6 +305,22 @@ const TaskDetailsModal = ({ task, onClose, onApprove, onReject }) => {
               </button>
             </div>
           )}
+          {task.status === "Approved" && (
+            <div className="flex justify-between mt-6">
+              <button
+                onClick={() => setIsReviewModalOpen(true)}
+                className="bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700"
+              >
+                Đánh giá ứng viên
+              </button>
+            </div>
+          )}
+          {isReviewModalOpen && (
+        <RatingModal
+          revieweeId={task.applicantId}
+          onClose={() => setIsReviewModalOpen(false)}
+        />
+      )}
         </div>
       </div>
     </div>

@@ -172,7 +172,7 @@ const MyPosts = () => {
                       className="bg-gray-100 p-4 rounded-lg shadow-sm flex justify-between items-start"
                     >
                       <div className="flex flex-col space-y-2 w-4/5">
-                        <div className="font-semibold text-lg">
+                        <div className="font-semibold text-lg hover:text-blue-500 hover:underline cursor-pointer" onClick={() => navigate(`/recruiter/candidate/${application.applicantID.user}`)}>
                           {application.name}
                         </div>
                         {/* <div className="text-sm">

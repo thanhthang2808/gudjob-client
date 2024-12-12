@@ -91,21 +91,6 @@ function JobDetails() {
             .catch((error) => {
               console.error("Error fetching reviews:", error);
             });
-          // get average rating
-          axios
-            .get(`${API_URL}/api/review/get-average-rating/${res.data.job.postedBy}`, {
-              withCredentials: true,
-            })
-            .then((res) => {
-              setPosterInfo((prev) => ({
-                ...prev,
-                averageRating: res.data.averageRating,
-              }));
-              console.log(res.data.averageRating);
-            })
-            .catch((error) => {
-              console.error("Error fetching average rating:", error);
-            });
         }
         
       })
@@ -287,14 +272,6 @@ function JobDetails() {
               <h3 className="text-lg font-semibold">Mô tả công việc</h3>
               <p>{job.description || "Không có mô tả công việc cho tin này"}</p>
             </div>
-            {/* <div>
-              <h3 className="text-lg font-semibold">Yêu cầu ứng viên</h3>
-              <p>- Chăm chỉ, cẩn thận</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">Quyền lợi</h3>
-              <p>- Hưởng nguyên lương trong thời gian thử việc.</p>
-            </div> */}
             <div>
               <h3 className="text-lg font-semibold mt-2">Địa điểm làm việc</h3>
               <p>{job.location}</p>
@@ -332,12 +309,12 @@ function JobDetails() {
                 {posterInfo?.companyName || "Tên công ty"}
               </h2>
             </div>
-            <div className="text-gray-700 mb-2">Quy mô: 10-24 nhân viên</div>
-            <div className="text-gray-700 mb-2">Lĩnh vực: IT</div>
+            <div className="text-gray-700 mb-2">Quy mô: {posterInfo?.numberOfEmployees || "Chưa cập nhật"}</div>
+            <div className="text-gray-700 mb-2">Lĩnh vực: {posterInfo?.industry || "Chưa cập nhật"}</div>
             <div className="text-gray-700 mb-2">
               Địa chỉ: {posterInfo?.address || "Địa chỉ công ty"}
             </div>
-            <Link to="#" className="text-green-500">
+            <Link to={`/candidate/company/${posterInfo?._id}`} className="text-green-500">
               Xem trang công ty
             </Link>
           </div>

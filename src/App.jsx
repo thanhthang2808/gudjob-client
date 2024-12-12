@@ -55,6 +55,10 @@ import CandidateSecuritySettings from "./pages/user-view/candidate/security-sett
 import ForgotPassword from "./pages/user-view/forgot-password";
 import ResetPassword from "./pages/user-view/reset-password";
 import RecruiterSecuritySettings from "./pages/user-view/recruiter/security-settings";
+import CandidateInfo from "./pages/user-view/recruiter/candidate-info";
+import CompaniesList from "./pages/admin-view/companies-list";
+import ReportManager from "./pages/admin-view/report-manager";
+import TaskList from "./pages/admin-view/tasks-list";
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state) => state.auth
@@ -103,8 +107,11 @@ function App() {
             <Route path="managers" element={<AdminManager />} />
             <Route path="approve-post" element={<ApprovePosts />} />
             <Route path="post-manager" element={<PostManagement />} />
+            <Route path="reports" element={<ReportManager />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="list-users" element={<UserList />} />
+            <Route path="list-companies" element={<CompaniesList />} />
+            <Route path="list-tasks" element={<TaskList />} />
             <Route path="user-detail/:id" element={<UserDetail />} />
             <Route path="post/:id" element={<PostDetail />} />
           </Route>
@@ -147,6 +154,7 @@ function App() {
             <Route path="myposts" element={<MyPosts />} />
             <Route path="profile" element={<RecruiterProfile />} />
             <Route path="postjob" element={<PostJob />} />
+            <Route path="candidate/:candidateId" element={<CandidateInfo />} />
             <Route path="security-settings" element={<RecruiterSecuritySettings />} />
             <Route path="forum" element={<HRForum />} />
             <Route path="job/:id" element={<RecruiterJobDetails />} />

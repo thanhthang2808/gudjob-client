@@ -126,6 +126,11 @@ const TaskDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
+      {task.customId && (
+        <div className="text-gray-500 p-2 rounded text-sm">
+          #{task.customId}
+        </div>
+      )}
       <h1 className="text-2xl font-bold">
         {task.title} - {task?.jobId?.title}
       </h1>

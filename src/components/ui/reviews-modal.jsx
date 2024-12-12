@@ -4,7 +4,7 @@ import { X } from "lucide-react"; // Icon for closing the modal
 
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
-const ReviewsModal = ({ recruiterId, onClose }) => {
+const ReviewsModal = ({ revieweeId, onClose }) => {
   const [averageRating, setAverageRating] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,13 +13,13 @@ const ReviewsModal = ({ recruiterId, onClose }) => {
     const fetchRatingAndReviews = async () => {
       try {
         // Fetch average rating of the recruiter
-        const ratingResponse = await axios.get(`${API_URL}/api/review/get-average-rating/${recruiterId}`, 
+        const ratingResponse = await axios.get(`${API_URL}/api/review/get-average-rating/${revieweeId}`, 
             { withCredentials: true }
         );
         setAverageRating(ratingResponse.data.averageRating);
 
         // Fetch reviews of the recruiter
-        const reviewsResponse = await axios.get(`${API_URL}/api/review/get-reviews/${recruiterId}`,
+        const reviewsResponse = await axios.get(`${API_URL}/api/review/get-reviews/${revieweeId}`,
             { withCredentials: true }
         );
         setReviews(reviewsResponse.data.reviews);
@@ -30,10 +30,10 @@ const ReviewsModal = ({ recruiterId, onClose }) => {
       }
     };
 
-    if (recruiterId) {
+    if (revieweeId) {
       fetchRatingAndReviews();
     }
-  }, [recruiterId]);
+  }, [revieweeId]);
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
