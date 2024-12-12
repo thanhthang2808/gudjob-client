@@ -14,6 +14,10 @@ function RecruiterHome() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+  });
 
   const navigate = useNavigate();
 
@@ -22,24 +26,38 @@ function RecruiterHome() {
     const fetchCandidates = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/user/get-list-candidates`, {
+          params: { page: pagination.currentPage, limit: 10 },
           withCredentials: true,
         });
 
         if (response.data && response.data.users) {
           setCandidates(response.data.users);
           setFilteredCandidates(response.data.users);
+          setPagination((prev) => ({
+            ...prev,
+            totalPages: response.data.pagination.totalPages,
+          }));
         } else {
           setCandidates([]);
           setFilteredCandidates([]);
+          setPagination((prev) => ({
+            ...prev,
+            totalPages: 1,
+          }));
         }
       } catch (error) {
         console.error("Lỗi khi gọi API danh sách ứng viên:", error);
         setCandidates([]);
+        setFilteredCandidates([]);
+        setPagination((prev) => ({
+          ...prev,
+          totalPages: 1,
+        }));
       }
     };
 
     fetchCandidates();
-  }, []);
+  }, [pagination.currentPage]);
 
   // Fetch jobs from API
   useEffect(() => {
@@ -51,7 +69,6 @@ function RecruiterHome() {
 
         if (response.data && response.data.myJobs) {
           setJobs(response.data.myJobs);
-          console.log(response.data.myJobs);
         } else {
           setJobs([]);
         }
@@ -106,6 +123,10 @@ function RecruiterHome() {
     navigate(`/recruiter/candidate/${candidate._id}`);
   };
 
+  const handlePageChange = (newPage) => {
+    setPagination((prev) => ({ ...prev, currentPage: newPage }));
+  };
+
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Header */}
@@ -152,6 +173,8 @@ function RecruiterHome() {
         candidates={filteredCandidates || []}
         onViewDetails={handleViewDetails}
         onMessageCandidate={(id) => handleChat(id, navigate)}
+        pagination={pagination}
+        onPageChange={handlePageChange}
       />
     </div>
   );

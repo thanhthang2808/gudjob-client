@@ -1,6 +1,7 @@
+import InterviewModal from "@/components/ui/interview-modal";
 import { handleChat } from "@/services/chat-service";
 import axios from "axios";
-import { CirclePlus } from "lucide-react";
+import { Calendar, CirclePlus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +13,9 @@ const MyPosts = () => {
   const [applicationsCount, setApplicationsCount] = useState({});
   const [applicationsData, setApplicationsData] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState(null);
   const [modalJobId, setModalJobId] = useState(null);
+  const [isOpenInterviewModal, setIsOpenInterviewModal] = useState(false);
   const [deletedJob, setDeletedJob] = useState(null);
   const [type, setType] = useState("");
   const navigate = useNavigate(); // Navigation hook
@@ -132,6 +135,13 @@ const MyPosts = () => {
     }
   };
 
+  const openInterviewModal = (application) => {
+    setSelectedApplication(application); // Set selected application
+    setIsOpenInterviewModal(true); // Open the modal
+  };
+
+  
+
   return (
     <div className="myJobs page bg-gray-100 min-h-screen p-5">
       <div className="container mx-auto">
@@ -250,6 +260,20 @@ const MyPosts = () => {
                         >
                           Giao việc
                         </button>)}
+                        {application.status === "Accepted" && type !== "Tự do" && (<button
+                        onClick={() => openInterviewModal(application)}
+                         
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                        >
+                          <Calendar size={20} className="inline-block mr-2" />
+                          Phỏng vấn
+                        </button>)}
+                        {isOpenInterviewModal && (
+                          <InterviewModal
+                            onClose={() => setIsOpenInterviewModal(false)}
+                            application={selectedApplication}
+                          />
+                        )}
                       </div>
                     </div>
                   ))}
@@ -260,7 +284,6 @@ const MyPosts = () => {
             </div>
           </div>
         )}
-
         {/* Job List */}
         {myJobs.length > 0 ? (
           <div className="space-y-6">
