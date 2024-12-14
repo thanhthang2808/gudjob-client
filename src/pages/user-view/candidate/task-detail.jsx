@@ -137,12 +137,12 @@ const TaskDetails = () => {
       <p className="text-gray-600 mt-2">{task.description}</p>
       <div className="mt-4 text-sm">
         <div>
-          <strong>Status:</strong> {task.status}
+          <strong>Trạng thái:</strong> {task.status}
         </div>
         <div className="flex items-center gap-4">
           {task.startDate && (
             <div>
-              <strong>Start date:</strong>{" "}
+              <strong>Ngày bắt đầu:</strong>{" "}
               {new Date(task.startDate).toLocaleDateString()}
             </div>
           )}
@@ -152,12 +152,12 @@ const TaskDetails = () => {
           </div>
         </div>
         <div>
-          <strong>Payment:</strong> ${task.payment?.amount || 0} -{" "}
+          <strong>Thanh toán:</strong> {task.payment.amount.toLocaleString()} VND -{" "}
           {task.payment?.status || "N/A"}
         </div>
         {task.submission.content && (
           <div className="mt-4 bg-gray-100 p-3 rounded">
-            <strong>Submission:</strong>
+            <strong>Nộp bài:</strong>
             <p className="text-gray-600 mt-2">{task.submission.content}</p>
 
             {task.submission.files && task.submission.files.length > 0 && (
@@ -191,7 +191,7 @@ const TaskDetails = () => {
             className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             onClick={handleAcceptTask}
           >
-            Accept
+            Chấp nhận
           </button>
         )}
         {task.status === "Assigned" && (
@@ -199,7 +199,7 @@ const TaskDetails = () => {
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             onClick={handleDenyTask}
           >
-            Deny
+            Từ chối
           </button>
         )}
         {task.status === "In Progress" && (
@@ -207,7 +207,7 @@ const TaskDetails = () => {
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             onClick={() => setIsModalOpen(true)}
           >
-            Submit
+            Nộp bài
           </button>
         )}
         {task.status === "Approved" && (
@@ -215,7 +215,7 @@ const TaskDetails = () => {
             className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
             onClick={() => setIsReviewModalOpen(true)}
           >
-            Review recruiter
+            Đánh giá nhà tuyển dụng
           </button>
         )}
         {task.status === "Submitted" && (
@@ -223,7 +223,7 @@ const TaskDetails = () => {
             className="text-gray-400 px-2 rounded"
             onClick={() => setIsModalOpen(true)}
           >
-            Awaiting employer approval
+            Đang chờ duyệt từ phía nhà tuyển dụng
           </div>
         )}
       </div>

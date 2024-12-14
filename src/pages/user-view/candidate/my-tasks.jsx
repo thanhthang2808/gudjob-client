@@ -34,6 +34,7 @@ const MyTasks = () => {
     fetchTasks();
   }, []);
 
+
   const filteredTasks = tasks
     .filter((task) =>
       task.customId ? task.customId.toString().includes(search) : false
@@ -56,7 +57,7 @@ const MyTasks = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">My Tasks</h1>
+      <h1 className="text-3xl font-bold mb-6">Nhiệm vụ freelance</h1>
       <div className="flex justify-between mb-4">
         <div className="flex items-center">
           <input
@@ -74,27 +75,27 @@ const MyTasks = () => {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="border rounded p-2 mr-2"
           >
-            <option value="">All Statuses</option>
-            <option value="Assigned">Assigned</option>
-            <option value="Denied">Denied</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Submitted">Submitted</option>
-            <option value="Overdue">Overdue</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
+            <option value="">Tất cả</option>
+            <option value="Assigned">Đã giao</option>
+            <option value="Denied">Đã hủy</option>
+            <option value="In Progress">Đang thực hiện</option>
+            <option value="Submitted">Đã hoàn thành</option>
+            <option value="Overdue">Quá hạn</option>
+            <option value="Approved">Được chấp nhận</option>
+            <option value="Rejected">Bị từ chối</option>
           </select>
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
             className="border rounded p-2"
           >
-            <option value="asc">Sort by Deadline: Ascending</option>
-            <option value="desc">Sort by Deadline: Descending</option>
+            <option value="asc">Sắp xếp theo Deadline: Tăng dần</option>
+            <option value="desc">Sắp xếp theo Deadline: Giảm dần</option>
           </select>
         </div>
       </div>
       {currentTasks.length === 0 ? (
-        <div className="text-gray-500">No tasks assigned to you yet.</div>
+        <div className="text-gray-500">Bạn chưa có nhiệm vụ nào.</div>
       ) : (
         <div className="grid gap-4">
           {currentTasks.map((task) => (
@@ -115,14 +116,14 @@ const MyTasks = () => {
               <p className="text-gray-600 mt-2">{task.description}</p>
               <div className="mt-4 text-sm">
                 <div>
-                  <strong>Status:</strong> {task.status}
+                  <strong>Trạng thái:</strong> {task.status}
                 </div>
                 <div>
                   <strong>Deadline:</strong>{" "}
                   {new Date(task.deadline).toLocaleDateString()}
                 </div>
                 <div>
-                  <strong>Payment:</strong> ${task.payment?.amount || 0} -{" "}
+                  <strong>Thanh toán:</strong> {task.payment.amount.toLocaleString()} VND -{" "}
                   {task.payment?.status || "Pending"}
                 </div>
               </div>
@@ -131,7 +132,7 @@ const MyTasks = () => {
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                   onClick={() => navigate(`/candidate/task/${task._id}`)}
                 >
-                  View Details
+                Chi tiết
                 </button>
               </div>
             </div>
@@ -144,17 +145,17 @@ const MyTasks = () => {
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
         >
-          Previous
+          Trước
         </button>
         <span className="text-gray-700">
-          Page {currentPage} of {totalPages}
+          Trang {currentPage} / {totalPages}
         </span>
         <button
           className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
         >
-          Next
+          Sau
         </button>
       </div>
     </div>
