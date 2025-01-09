@@ -29,7 +29,7 @@ function AuthLogin() {
         });
       } else {
         toast({
-          title: data?.payload?.message,
+          title: data?.payload?.message || "Lỗi hệ thống! Vui lòng thử lại sau!",
           variant: "destructive",
         });
       }

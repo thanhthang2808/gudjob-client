@@ -57,6 +57,10 @@ function AuthRegister() {
         navigate("/auth/login");
       } else {
         setError(data?.payload?.message);
+        toast({
+          title: data?.payload?.message || "Lỗi hệ thống! Vui lòng thử lại sau!",
+          variant: "destructive",
+        });
         return;
       }
     });
